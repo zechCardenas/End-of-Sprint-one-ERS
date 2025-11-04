@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<main class="container">
+  <h1>
+    Welcome,
+    {% if current_user.is_authenticated and current_user.first_name %}
+      {{ current_user.first_name }}
+    {% else %}
+      Student
+    {% endif %}
+  </h1>
+
+  <p>What would you like to do?</p>
+
+  <nav>
+    <ul>
+      <li>
+        <a href="{{ url_for('student_ui.student_exams') }}" class="btn btn-primary-blue">
+          Make an Appointment
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('student_ui.student_appointments') }}" class="btn btn-primary-blue">
+          View My Appointments
+        </a>
+      </li>
+      <li>
+        <form action="{{ url_for('auth.logout') }}" method="post" style="display:inline">
+          {{ csrf_token() if csrf_token is defined }}
+          <button type="submit" class="btn btn-primary-blue">Logout</button>
+        </form>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- ✅ Extra line to satisfy the user story "preferred" message -->
+  <p class="hint">
+    You can cancel or reschedule your appointments on the
+    <strong>“View My Appointments”</strong> page.
+  </p>
+</main>
+{% endblock %}
