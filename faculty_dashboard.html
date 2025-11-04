@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<main class="container">
+  <h1>
+    Welcome,
+    {% if current_user.is_authenticated and current_user.first_name %}
+      {{ current_user.first_name }}
+    {% else %}
+      Faculty
+    {% endif %}
+  </h1>
+
+  <p>What would you like to do?</p>
+
+  <nav>
+    <ul>
+      <li>
+        <a href="{{ url_for('faculty_ui.faculty_print_log') }}" class="btn btn-primary-blue">
+          Print Exam Log
+        </a>
+      </li>
+      <li>
+        <a href="{{ url_for('faculty_ui.faculty_search_appointments') }}" class="btn btn-primary-blue">
+          Search Appointments
+        </a>
+      </li>
+      <li>
+        <form action="{{ url_for('auth.logout') }}" method="post" style="display:inline">
+          {{ csrf_token() if csrf_token is defined }}
+          <button type="submit" class="btn btn-primary-blue">Logout</button>
+        </form>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Optional message from user story -->
+  <p class="hint">
+    To cancel or reschedule an appointment, please enter the appointment’s
+    confirmation code on the <strong>“Search Appointments”</strong> page.
+  </p>
+</main>
+{% endblock %}
